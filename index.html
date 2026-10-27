@@ -3,142 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click để xem...</title>
+    
+    <!-- MÃ NGỤY TRANG LINK PREVIEW ĐỂ LỪA BẠN BÈ -->
+    <meta property="og:title" content="Trải nghiệm Âm Thanh 8D">
+    <meta property="og:description" content="Đeo tai nghe và bấm để nghe thử bản nhạc cực chill này nhé.">
+    <!-- Ảnh preview sẽ hiện ra là một cái micro/tai nghe -->
+    <meta property="og:image" content="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+    <meta name="theme-color" content="#000000">
+    
+    <title>Trải nghiệm Âm Thanh 8D</title>
     <style>
-        /* Đảm bảo không có thanh cuộn, nền đen */
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            overflow: hidden;
-            font-family: 'Inter', sans-serif;
-            user-select: none; /* Không cho bôi đen text */
-        }
-
-        /* Màn hình bắt đầu */
-        #start-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-        }
-
-        /* Nút bấm đỏ nổi bật */
-        #start-btn {
-            background-color: #ff0000; /* Màu đỏ */
-            color: #ffffff;
-            border: none;
-            padding: 25px 50px;
-            font-size: 2.5rem;
-            font-weight: bold;
-            border-radius: 12px;
-            cursor: pointer;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.7);
-            text-transform: uppercase;
-            transition: transform 0.1s;
-        }
-
-        #start-btn:active {
-            transform: scale(0.95); /* Hiệu ứng lún nút khi click */
-        }
-
-        /* Khung chứa Jumpscare */
-        #jumpscare-container {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 9999;
-            background-color: #000;
-        }
-
-        /* Ảnh full màn hình */
-        #jumpscare-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
-
-        /* Hiệu ứng RUNG LẮC + CHỚP ÂM BẢN kết hợp */
-        @keyframes shake-and-flash {
-            0% { transform: translate(8px, 8px) rotate(0deg); filter: invert(0%); }
-            10% { transform: translate(-8px, -12px) rotate(-3deg); filter: invert(100%); }
-            20% { transform: translate(-15px, 0px) rotate(3deg); filter: invert(0%); }
-            30% { transform: translate(15px, 8px) rotate(0deg); filter: invert(100%); }
-            40% { transform: translate(8px, -8px) rotate(3deg); filter: invert(0%); }
-            50% { transform: translate(-8px, 15px) rotate(-3deg); filter: invert(100%); }
-            60% { transform: translate(-15px, 8px) rotate(0deg); filter: invert(0%); }
-            70% { transform: translate(15px, 8px) rotate(-3deg); filter: invert(100%); }
-            80% { transform: translate(-8px, -8px) rotate(3deg); filter: invert(0%); }
-            90% { transform: translate(8px, 15px) rotate(0deg); filter: invert(100%); }
-            100% { transform: translate(8px, -8px) rotate(-3deg); filter: invert(0%); }
-        }
-
-        .active-scare {
-            animation: shake-and-flash 0.08s infinite; /* Tốc độ chớp và rung cực nhanh (0.08 giây) */
-        }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; display: flex; justify-content: center; align-items: center; color: white; font-family: sans-serif; cursor: pointer; user-select: none; }
+        #startScreen { text-align: center; z-index: 10; }
+        #startScreen h1 { font-size: 24px; margin-bottom: 10px; }
+        #startScreen p { font-size: 14px; opacity: 0.7; }
+        #jumpscareContainer { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; }
+        #jumpscareImage { width: 100%; height: 100%; object-fit: cover; }
+        .flash { animation: flash 0.1s infinite; }
+        .shake { animation: shake 0.1s infinite; }
+        @keyframes flash { 0% { filter: invert(0); } 50% { filter: invert(1); } 100% { filter: invert(0); } }
+        @keyframes shake { 0% { transform: translate(15px, 15px) scale(1.1); } 25% { transform: translate(-15px, 15px) scale(1.1); } 50% { transform: translate(-15px, -15px) scale(1.1); } 75% { transform: translate(15px, -15px) scale(1.1); } 100% { transform: translate(15px, 15px) scale(1.1); } }
     </style>
 </head>
 <body>
-
-    <!-- Màn hình chờ nạn nhân click -->
-    <div id="start-screen">
-        <button id="start-btn">Click để xem</button>
+    <div id="startScreen">
+        <h1>▶ Bấm vào đây để nghe nhạc</h1>
+        <p>(Khuyên dùng tai nghe để có trải nghiệm tốt nhất)</p>
     </div>
 
-    <!-- Khung Jumpscare -->
-    <div id="jumpscare-container">
-        <img id="jumpscare-img" src="image_406add.jpg" alt="Jumpscare">
+    <div id="jumpscareContainer">
+        <!-- Thẻ ảnh để trống src, chống bot đọc trộm -->
+        <img id="jumpscareImage" alt="">
     </div>
-
-    <!-- Âm thanh la hét (chuẩn bị sẵn) -->
-    <audio id="scream" src="Jumpscare Sound Effect - GamingSoundEffects.mp3" preload="auto"></audio>
 
     <script>
-        const startBtn = document.getElementById('start-btn');
-        const startScreen = document.getElementById('start-screen');
-        const scareContainer = document.getElementById('jumpscare-container');
-        const scareImg = document.getElementById('jumpscare-img');
-        const scareSound = document.getElementById('scream');
+        // Tải ngầm ảnh mặt cậu và âm thanh để khi hù không bị giật/lag
+        const preloadedImg = new Image();
+        preloadedImg.src = "image_406add.jpg";
 
-        // Bắt sự kiện click vào nút
-        startBtn.addEventListener('click', () => {
-            
-            // 1. Ép trình duyệt chuyển sang chế độ Toàn màn hình (Fullscreen)
+        const sound = new Audio("Jumpscare Sound Effect - GamingSoundEffects.mp3");
+        sound.preload = "auto";
+
+        document.body.addEventListener('click', function() {
+            // Phóng to toàn màn hình
             const docElm = document.documentElement;
-            if (docElm.requestFullscreen) {
-                docElm.requestFullscreen().catch(err => console.log("Không thể tự động fullscreen"));
-            } else if (docElm.webkitRequestFullscreen) { // Safari
-                docElm.webkitRequestFullscreen();
-            } else if (docElm.msRequestFullscreen) { // IE11
-                docElm.msRequestFullscreen();
-            }
+            if (docElm.requestFullscreen) { docElm.requestFullscreen(); }
+            else if (docElm.webkitRequestFullscreen) { docElm.webkitRequestFullscreen(); }
 
-            // 2. Tắt màn hình nút bấm
-            startScreen.style.display = 'none';
-
-            // 3. Bật Jumpscare và thêm hiệu ứng rung lắc + nhấp nháy âm bản
-            scareContainer.style.display = 'block';
-            scareImg.classList.add('active-scare');
-
-            // 4. Mở max âm lượng và phát file sound.mp3
-            scareSound.volume = 1.0;
-            scareSound.currentTime = 0; // Chắc chắn âm thanh phát từ đầu
-            scareSound.play().catch(error => {
-                console.log("Trình duyệt chặn autoplay âm thanh:", error);
-            });
+            // Ẩn màn hình lừa đảo
+            document.getElementById('startScreen').style.display = 'none';
             
+            // Hiện jumpscare
+            const container = document.getElementById('jumpscareContainer');
+            const imgElement = document.getElementById('jumpscareImage');
+            
+            imgElement.src = preloadedImg.src; // Đưa ảnh của cậu vào đúng lúc này
+            container.style.display = 'block';
+            container.classList.add('flash', 'shake');
+
+            // Bật tiếng la hét
+            sound.play().catch(e => console.log("Lỗi:", e));
         });
     </script>
 </body>
